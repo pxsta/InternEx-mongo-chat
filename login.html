@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ログイン</title>
+<script type="text/javascript" src="./scripts/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+<!--
+$(function(){
+	if(location.hash=="#error"){$("#info").text("ログインエラー")}
+});
+//-->
+</script>
+<style type="text/css">
+<!--
+label,input {
+	font-size: 13px;
+	margin-bottom: 10px;
+}
+label {
+	text-align: right;
+	padding-right: 15px;
+}
+input.text {
+	width: 230px;
+	line-height: 20px;
+}
+.button {
+	padding: 5px 20px;
+	width: 120px;
+	float: left;
+}
+#info{
+color: red; 
+font-size: 10px;
+}
+div {
+	text-align: left;
+	margin: 0px auto;
+	width: 300px;
+}
+#regist {
+	float: right;
+}
+-->
+</style>
+</head>
+<body>
+	<div style="vertical-align: middle;">
+		<h3>ログイン</h3>
+		<p id="info"></p>
+		<form method="post" action="./user/login">
+			<label for="userID">ID</label><br> <input type="text"
+				name="userID" class="text"><br> <label for="passwprd">パスワード</label><br>
+			<input type="text" name="password" class="text"><br> <input
+				type="submit" value="ログイン" class="button">
+		</form>
+		<button onclick='javascript:location.href = "./regist.html"'
+			class="button" id="regist">新規登録</button>
+	</div>
+</body>
+</html>

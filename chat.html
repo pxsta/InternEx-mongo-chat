@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>チャット</title>
+   <script type="text/javascript" src="./scripts/jquery-1.7.1.min.js"></script> 
+   <script type="text/javascript" src="./scripts/json2.js"></script>
+   <script type="text/javascript" src="./scripts/moment.min.js"></script>
+   <script type="text/javascript" src="./src/util/myUtils.js"></script>
+   <script type="text/javascript" src="./socket.io/socket.io.js"></script>
+<script type="text/javascript" src="./src/client/client.js"></script>
+<style type="text/css">
+<!--
+a.logoutLink{
+float:right
+}
+span.staticInfo {
+	display: block;
+	padding: 0 0 0 10px;
+	margin: 0px 0 10px 0;
+	border-bottom: 1px dotted #234487;
+	border-left: 5px solid #234487;
+	font-size: 123%;
+	font-weight: bold;
+	text-shadow: 1px 1px 1px #cccccc;
+}
+
+body {
+	background: RGB(246, 246, 246) repeat scroll top left;
+}
+
+div#main {
+	height: 100%;
+	font: normal normal 12px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+	color: #222;
+	font: normal normal 12px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+}
+
+div#topArea {
+	height: 70%;
+}
+
+div#logArea {
+	width: 65%;
+	height: 100%;
+	float: left;
+	overflow: scroll;
+	overflow-y: scroll;
+	padding: 10px 15px;
+	background: white;
+	border: 1px solid #CCC;
+	border-radius: 5px;
+	background: white;
+}
+
+div#logArea p {
+	border: 1px solid lightGrey;
+	border-radius: 5px;
+}
+
+div#rightArea {
+	width: 27%;
+	height: 100%;
+	margin: 0 0 0 70%;
+}
+
+span.logName {
+	font: 800 12px/1.9 arial, sans-serif;
+	margin-left: 5px;
+	margin-right: 10px;
+}
+
+div#chartArea{
+	height: 40%;
+	padding: 10px 15px;
+	background: white;
+	border: 1px solid #CCC;
+	border-radius: 5px;
+	background: white;
+
+}
+div#piechart {
+    height: 90%;
+}
+
+div#menbersArea {
+    margin-top: 30px;
+	overflow: scroll;
+	overflow-y: scroll;
+	padding: 10px 15px;
+	background: white;
+	border: 1px solid #CCC;
+	border-radius: 5px;
+	background: white;
+}
+
+div#buttomArea {
+	clear: both;
+	margin-top: 30px;
+	padding: 10px 15px;
+	background: white;
+	border: 1px solid #CCC;
+	border-radius: 5px;
+	background: white;
+	padding: 10px 15px;
+}
+
+div#nbButtonArea {
+	background: white;
+	border: 1px solid #CCC;
+	border-radius: 5px;
+	background: white;
+	margin-bottom: 10px;
+	width: 40%;
+}
+
+textarea#messageBox {
+	width: 40%;
+	height: 50px;
+}
+button#ankButton{
+width:400px;
+height: 100px;
+}
+-->
+</style>
+</head>
+<body>
+    <a id="logoutLink" href="./user/logout">ログアウト</a><br style="clear:both">
+	<div id="main">
+		<div id="topArea">
+			<div id="logArea">
+				<span class='staticInfo'>チャットログ</span>
+			</div>
+			<div id="rightArea">
+				<div id="menbersArea">
+					<span class='staticInfo'>オンライン</span>
+				</div>
+			</div>
+		</div>
+		<div id="buttomArea">
+			<textarea id="messageBox"></textarea>
+			<button id="mainButton" onclick=javascript:onClickMainButton()>投稿</button>
+		</div>
+	</div>
+</body>
+</html>
