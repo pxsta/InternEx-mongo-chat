@@ -1,13 +1,8 @@
-var MyApp={sessionID:0,requestRoomDataIntervalID:0};
+var MyApp={sessionID:0};
 var connection = io.connect("/");
 connection.on('connect', function() {
     console.log("Cliant-connect");
-    MyApp.sessionID = connection.socket.sessionid;
-    
-    //ログイン済みのユーザーの情報を要求する
-    connection.emit('requestRoomData');
-    MyApp.requestRoomDataIntervalID = setInterval(function(){
-        connection.emit('requestRoomData');},60*1000);
+    MyApp.sessionID = connection.socket.sessionid;    
 });
 
 connection.on('disconnect', function() {
@@ -48,6 +43,10 @@ connection.on('chatMessage', function(data) {
     chatWindow.addLog(data);
 });
 
+connection.on('destroy',function(data){
+    chatWindow.deleteLog(data);
+});
+
 window.onload = function() {
     $('body').css('height', document.documentElement.clientHeight);    
     $(function() {
@@ -59,28 +58,22 @@ window.onload = function() {
         });
         $("button.logDeleatLink").live("click",function(e){
             var postID = $(this).attr("data-postid");
-            $.ajax({
-                type: 'post',
-                url: 'post/destroy',
-                data: {
-                'postID':postID
-                    },
-                    success: function(data){
-                        $("".Format("[data-postid={0}]",postID)).remove();
-                        }
-                    });
+            connection.emit("destroy", {'postID':postID});
         });
-        //最新10件の投稿を取得する
-        $.ajax({url: 'post/timeline',
-            success: function(data){
-                if(data){
-                    data.forEach(function(elem){
-                        //時系列は無視 
-                        chatWindow.addLog(elem);
-                    });
-                }
-          }
-        });
+        if(typeof FileReader!=='undefined'){
+            $("input#read-button").bind("change",function(e){
+                //ファイル読み込み
+                var file = e.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    sendImage(e.target.result);
+                };
+                reader.readAsDataURL(file);
+           });
+        }
+        else{
+            $(".readfile").remove();
+        }
     });
 };
 
@@ -89,6 +82,9 @@ window.onload = function() {
 var sendMessage = function(message) {
     connection.emit("chat", message);
 };
+var sendImage = function(data){
+    connection.emit("chat_image", data);
+}
 
 var onClickMainButton = function() {
     var message = $("#messageBox").attr('value').replace('\n', '').replace('\r', '');
@@ -106,18 +102,33 @@ var chatWindow = {
         return "".Format('<p data-postid="{0}"><span class="logName">{1}</span><span class="logMessage">{3}</span><span style="float:right;"><span class="logDate">{2}</span>{4}</span></p>', postData.postID, postData.name,moment(postData.postDate).format("YY/MM/DD HH:MM"), postData.message.toString().escapeHtml(),
             postData.isOthers?"":"".Format(' <button class="logDeleatLink" data-postid="{0}">削除する</button>',postData.postID));
     },
+    makeLogImageHtml : function(postData) {
+        return "".Format('<p data-postid="{0}"><span class="logName">{1}</span><img class="logImage" src="{3}"></img><span style="float:right;"><span class="logDate">{2}</span>{4}</span></p>', postData.postID, postData.name,moment(postData.postDate).format("YY/MM/DD HH:MM"), postData.message.toString().escapeHtml(),
+            postData.isOthers?"":"".Format(' <button class="logDeleatLink" data-postid="{0}">削除する</button>',postData.postID));
+    },
     addLog : function(postData) {
-        var html = chatWindow.makeLogHtml(postData);
-        $('div#logArea').append(html);
-        $("#logArea").scrollTop($("#logArea")[0].scrollHeight);
+        if($("".Format('div#logArea p[data-postid="{0}"]',postData.postID)).length==0){
+            var html;
+            if(typeof postData.messageType!=='undefined' && postData.messageType=='image'){
+                html = chatWindow.makeLogImageHtml(postData);
+            }
+            else{
+                html = chatWindow.makeLogHtml(postData);
+            }
+            $('div#logArea').append(html);
+            $("#logArea").scrollTop($("#logArea")[0].scrollHeight);
+        }
+    },
+    deleteLog:function(postData){
+        $("".Format('div#logArea p[data-postid="{0}"]',postData.postID)).remove();
     },
     makeMenbersAreaLineHtml : function(menberData) {
         return "".Format('<p class = "membername" data-name="{0}"><span class="menberAreaName">{1}</span></p>', menberData.userID, menberData.name);
     },
     addMember:function(member){
         var html = chatWindow.makeMenbersAreaLineHtml(member);
-        if( $("".Format('div#menbersArea p[data-name="{0}"]',member.userID)).length==0){
-        $("div#menbersArea").append(html);
+        if($("".Format('div#menbersArea p[data-name="{0}"]',member.userID)).length==0){
+            $("div#menbersArea").append(html);
         }
     },
     deleteMember:function(member){

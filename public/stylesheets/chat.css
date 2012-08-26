@@ -56,18 +56,8 @@ span.logName {
 	margin-left: 5px;
 	margin-right: 10px;
 }
-
-div#chartArea{
-	height: 40%;
-	padding: 10px 15px;
-	background: white;
-	border: 1px solid #CCC;
-	border-radius: 5px;
-	background: white;
-
-}
-div#piechart {
-    height: 90%;
+img.logImage{
+	height:30%
 }
 
 div#menbersArea {
@@ -92,20 +82,7 @@ div#buttomArea {
 	padding: 10px 15px;
 }
 
-div#nbButtonArea {
-	background: white;
-	border: 1px solid #CCC;
-	border-radius: 5px;
-	background: white;
-	margin-bottom: 10px;
-	width: 40%;
-}
-
 textarea#messageBox {
 	width: 40%;
 	height: 50px;
-}
-button#ankButton{
-width:400px;
-height: 100px;
 }
