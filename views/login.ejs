@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ログイン</title>
+    <link rel='stylesheet' href='/stylesheets/login.css' />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <div style="vertical-align: middle;">
+		<h3>ログイン</h3>
+		<p id="info"><%= info %></p>
+		<form method="post" action="./user/login">
+			<label for="userID">ID</label><br>
+			<input type="text" name="userID" class="text"><br>
+			<label for="passwprd">パスワード</label><br>
+			<input type="text" name="password" class="text"><br>
+			<input type="submit" value="ログイン" class="button">
+		</form>
+		<button onclick='javascript:location.href = "./regist"' class="button" id="regist">新規登録</button>
+	</div>
+  </body>
+</html>

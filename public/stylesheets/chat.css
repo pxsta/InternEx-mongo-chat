@@ -1,16 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>チャット</title>
-   <script type="text/javascript" src="./scripts/jquery-1.7.1.min.js"></script> 
-   <script type="text/javascript" src="./scripts/json2.js"></script>
-   <script type="text/javascript" src="./scripts/moment.min.js"></script>
-   <script type="text/javascript" src="./src/util/myUtils.js"></script>
-   <script type="text/javascript" src="./socket.io/socket.io.js"></script>
-<script type="text/javascript" src="./src/client/client.js"></script>
-<style type="text/css">
-<!--
 a.logoutLink{
 float:right
 }
@@ -122,26 +109,3 @@ button#ankButton{
 width:400px;
 height: 100px;
 }
--->
-</style>
-</head>
-<body>
-    <a id="logoutLink" href="./user/logout">ログアウト</a><br style="clear:both">
-	<div id="main">
-		<div id="topArea">
-			<div id="logArea">
-				<span class='staticInfo'>チャットログ</span>
-			</div>
-			<div id="rightArea">
-				<div id="menbersArea">
-					<span class='staticInfo'>オンライン</span>
-				</div>
-			</div>
-		</div>
-		<div id="buttomArea">
-			<textarea id="messageBox"></textarea>
-			<button id="mainButton" onclick=javascript:onClickMainButton()>投稿</button>
-		</div>
-	</div>
-</body>
-</html>

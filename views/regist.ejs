@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>新規登録</title>
+    <link rel='stylesheet' href='/stylesheets/regist.css' />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+	<div style="vertical-align: middle;">
+		<h3>新規登録</h3>
+		<p id="info"><%= info %></p>
+		<form method="post" action="./regist/new">
+			<label for="userID">ID (半角4〜15文字)</label><br>
+			<input type="text" name="userID" pattern="^[0-9A-Za-z]{4,15}$"  class="text" required><br>
+			<label for="password">パスワード (半角4〜15文字)</label><br>
+			<input type="text" name="password" pattern="^[0-9A-Za-z]{4,15}$" class="text" required><br>
+			<input type="submit" value="新規登録">
+		</form>
+	</div>
+  </body>
+</html>
