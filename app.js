@@ -211,7 +211,6 @@ io.sockets.on('connection', function(socket) {
 				    socket.emit("chatMessage", chatData);
 				    chatData.isOthers = true;
 				    socket.broadcast.emit("chatMessage", chatData);
-				    console.dir(raw);
 			   }
 		});
 	});
