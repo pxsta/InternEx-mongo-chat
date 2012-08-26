@@ -2,6 +2,7 @@ var MyApp={sessionID:0};
 var connection = io.connect("/");
 connection.on('connect', function() {
     console.log("Cliant-connect");
+    $('#mainButton').text("投稿");
     MyApp.sessionID = connection.socket.sessionid;    
 });
 
@@ -43,8 +44,13 @@ connection.on('chatMessage', function(data) {
     chatWindow.addLog(data);
 });
 
+//ユーザーの発言が削除された時
 connection.on('destroy',function(data){
     chatWindow.deleteLog(data);
+});
+
+connection.on('disconnect',function(){
+    $('#mainButton').text("再接続");
 });
 
 window.onload = function() {
@@ -87,12 +93,16 @@ var sendImage = function(data){
 }
 
 var onClickMainButton = function() {
-    var message = $("#messageBox").attr('value').replace('\n', '').replace('\r', '');
-    if(message && message.length > 0) {
-        sendMessage(message);
+    if(connection.socket.connected){
+        var message = $("#messageBox").attr('value').replace('\n', '').replace('\r', '');
+        if(message && message.length > 0) {
+            sendMessage(message);
+        }
+        $("#messageBox").attr('value', '');
     }
-    $("#messageBox").attr('value', '');
-
+    else{
+        location.reload();
+    }
 };
 
 
